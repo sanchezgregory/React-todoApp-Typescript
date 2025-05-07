@@ -6,6 +6,7 @@ interface props extends TodoItemProps {
 }
 
 export const TodoItem: React.FC<props> = ({todo, onRemoveTodo, onToggleTodo}) => {
+    
     const {id, title, completed} = todo
 
     const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>): void => {

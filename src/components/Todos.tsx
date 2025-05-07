@@ -7,7 +7,7 @@ interface props extends TodosProps {
     onAddTodo: ({title}: TodoTitle) => void;
 }
 
-export const Todos: React.FC<props> = ({todos, onRemoveTodo, onToggleTodo, onAddTodo}) => {
+export const Todos: React.FC<props> = ({todos, onRemoveTodo, onToggleTodo}) => {
   return (
       <ul className="todo-list">
       {todos.map(todo => (

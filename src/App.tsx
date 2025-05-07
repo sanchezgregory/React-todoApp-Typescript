@@ -9,6 +9,7 @@ const initialTodos: Todo[] = [
 ]
   
 const App = () => {
+  
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [newTodo, setNewTodo] = useState<string>("")
 

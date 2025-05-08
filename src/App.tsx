@@ -1,13 +1,14 @@
 import { useState } from "react"
 import { Footer } from "./components/Footer"
+import { Header } from "./components/Header"
 import { Todos } from "./components/Todos"
 import { TODO_FILTERS } from "./consts/consts"
-import type { FilterValue, Todo, TodoId } from "./types/types"
+import type { FilterValue, Todo, TodoId, TodoTitle } from "./types/types"
 
 const initialTodos: Todo[] = [
-  { id: 1, title: "Todo 1", completed: true },
-  { id: 2, title: "Todo 2", completed: false },
-  { id: 3, title: "Todo 3", completed: false },
+  { id: "1", title: "Todo 1", completed: true },
+  { id: "2", title: "Todo 2", completed: false },
+  { id: "3", title: "Todo 3", completed: false },
 ]
   
 const App = () => {
@@ -27,6 +28,16 @@ const App = () => {
     setFiltersSelected(filter)
   }
 
+  const handleAddTodo = ({title}: TodoTitle): void => {
+    const newTodo: Todo = {
+        id: crypto.randomUUID(),
+        title,
+        completed: false
+    }
+    const newTodos = [...todos, newTodo]
+    setTodos(newTodos)
+  }
+
   const activeCount = todos.filter(todo => !todo.completed).length
   const completedCount = todos.length - activeCount
 
@@ -44,14 +55,7 @@ const App = () => {
     return (
     <>
       <div className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
-          <input
-            className="new-todo"
-            placeholder="What needs to be done?"
-            autoFocus
-          />
-        </header>
+        <Header onAddTodo={handleAddTodo}/>
         <Todos 
           todos={filteredTodos}
           onRemoveTodo={handleRemoveTodo}

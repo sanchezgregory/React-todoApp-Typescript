@@ -15,4 +15,5 @@ export type TodosProps = {
 export type TodoItemProps = {
     todo: Todo;
 }
-    
+
+export type FilterValue = typeof FILTER_BUTTONS[keyof typeof FILTER_BUTTONS];

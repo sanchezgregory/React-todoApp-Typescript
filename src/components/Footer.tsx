@@ -1,12 +1,15 @@
-import type { Todo } from "../types/types"
-import { Filters } from "./Filters"
+import type { FilterValue } from "../types/types";
+import { Filters } from "./Filters";
 
-export const Footer: React.FC<{activeCount: number, todos: Todo[]}> = ({activeCount, todos}) => {
+interface props {
+    activeCount: number;
+    completedCount: number;
+    filtersSelected: FilterValue;
+    onClearCompleted: () => void;
+    onFilterChange: (filter: FilterValue) => void;
+}
 
-    const filtersSelected = todos.filter(todo => !todo.completed).length
-    const handleFilterChange = (filter: string) => {
-        console.log(filter)
-    }
+export const Footer: React.FC<props> = ({activeCount = 0, completedCount = 0, filtersSelected, onClearCompleted, onFilterChange}) => {
     
   return (  
     <footer className="footer">
@@ -15,8 +18,13 @@ export const Footer: React.FC<{activeCount: number, todos: Todo[]}> = ({activeCo
         </span>
        <Filters
         filtersSelected={filtersSelected}
-        onFilterChange={handleFilterChange}
+        onFilterChange={onFilterChange}
        / >
+       {completedCount > 0 && (
+        <button className="clear-completed" onClick={onClearCompleted}>
+            Clear completed
+        </button>
+       )}
     </footer>
   )
 }

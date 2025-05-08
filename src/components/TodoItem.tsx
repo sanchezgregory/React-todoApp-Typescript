@@ -1,8 +1,8 @@
-import type { TodoId, TodoItemProps } from "../types/types";
+import type { Todo, TodoId, TodoItemProps } from "../types/types";
 
 interface props extends TodoItemProps {
     onRemoveTodo: ({id}: TodoId) => void;
-    onToggleTodo: ({id}: TodoId, completed: boolean) => void;
+    onToggleTodo: ({id, completed}:Pick<Todo, "id" | "completed">) => void;
 }
 
 export const TodoItem: React.FC<props> = ({todo, onRemoveTodo, onToggleTodo}) => {
@@ -10,7 +10,7 @@ export const TodoItem: React.FC<props> = ({todo, onRemoveTodo, onToggleTodo}) =>
     const {id, title, completed} = todo
 
     const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        onToggleTodo({id}, e.target.checked)
+        onToggleTodo({id, completed: e.target.checked})
     }
 
   return (

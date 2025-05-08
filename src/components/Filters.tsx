@@ -1,22 +1,29 @@
-import { TODO_FILTERS } from "../consts/consts";
+import { FILTER_BUTTONS } from "../consts/consts";
+import type { FilterValue } from "../types/types";
 
 interface Props {
-    filtersSelected: typeof TODO_FILTERS[keyof typeof TODO_FILTERS];
-    onFilterChange: (filter: typeof TODO_FILTERS[keyof typeof TODO_FILTERS]) => void;
+    filtersSelected: FilterValue;
+    onFilterChange: (filter: FilterValue) => void; 
 }
 
 export const Filters: React.FC<Props> = ({filtersSelected, onFilterChange}) => {
+    
+    const handleClick = (filter: FilterValue, e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault()
+        onFilterChange(filter)
+    } 
+    
   return (
     <ul className="filters">
-        <li> 
-            <a href="#" onClick={() => onFilterChange(TODO_FILTERS.ALL)} className={filtersSelected === TODO_FILTERS.ALL ? "selected" : ""}>{TODO_FILTERS.ALL}</a>
-        </li>
-        <li>
-            <a href="#" onClick={() => onFilterChange(TODO_FILTERS.ACTIVE)} className={filtersSelected === TODO_FILTERS.ACTIVE ? "selected" : ""}>{TODO_FILTERS.ACTIVE}</a>
-        </li>
-        <li>
-            <a href="#" onClick={() => onFilterChange(TODO_FILTERS.COMPLETED)} className={filtersSelected === TODO_FILTERS.COMPLETED ? "selected" : ""}>{TODO_FILTERS.COMPLETED}</a>
-        </li>
+        {Object.entries(FILTER_BUTTONS).map(([key, {label, href}]) => {
+            const isSelected = filtersSelected === key
+            const className = isSelected ? "selected" : ""
+            return (
+                <li key={key}>
+                    <a href={href} onClick={(e) => handleClick(key, e)} className={className}>{label}</a>
+                </li>
+           )
+        })}
     </ul>
   )
 }

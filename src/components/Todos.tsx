@@ -1,10 +1,9 @@
-import type { TodoId, TodosProps, TodoTitle } from "../types/types";
+import type { Todo, TodoId, TodosProps } from "../types/types";
 import { TodoItem } from "./TodoItem";
 
 interface props extends TodosProps {
     onRemoveTodo: ({id}: TodoId) => void;
-    onToggleTodo: ({id}: TodoId) => void;
-    onAddTodo: ({title}: TodoTitle) => void;
+    onToggleTodo: ({id, completed}:Pick<Todo, "id" | "completed">) => void;
 }
 
 export const Todos: React.FC<props> = ({todos, onRemoveTodo, onToggleTodo}) => {
